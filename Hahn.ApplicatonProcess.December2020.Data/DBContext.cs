@@ -1,4 +1,5 @@
 ﻿using Hahn.ApplicatonProcess.December2020.Data.Models;
+using Hahn.ApplicatonProcess.December2020.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
