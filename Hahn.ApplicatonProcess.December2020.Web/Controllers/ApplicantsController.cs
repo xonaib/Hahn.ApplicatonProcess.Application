@@ -1,4 +1,5 @@
 ﻿using Hahn.ApplicatonProcess.December2020.Domain.Repository;
+using Hahn.ApplicatonProcess.December2020.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,11 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
         // GET: api/<ApplicantsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Applicant> Get()
         {
-            _applicantsRepository.GetApplicants();
-            return new string[] { "value1", "value2" };
+            IEnumerable<Applicant> applicants =  _applicantsRepository.GetApplicants().ToList();
+            return applicants;
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<ApplicantsController>/5
@@ -36,8 +38,12 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
         // POST api/<ApplicantsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Applicant value)
         {
+            if(value != null)
+            {
+                _applicantsRepository.AddApplicant(value);
+            }
         }
 
         // PUT api/<ApplicantsController>/5

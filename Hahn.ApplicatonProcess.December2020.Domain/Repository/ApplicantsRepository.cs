@@ -20,5 +20,13 @@ namespace Hahn.ApplicatonProcess.December2020.Domain.Repository
         {
             return db.Applicants;
         }
+
+        public bool AddApplicant(Applicant applicant)
+        {
+            db.Applicants.Add(applicant);
+            db.SaveChanges();
+
+            return true;
+        }
     }
 }
