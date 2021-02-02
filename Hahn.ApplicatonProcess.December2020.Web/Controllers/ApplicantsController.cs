@@ -15,6 +15,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
     public class ApplicantsController : ControllerBase
     {
         private readonly ApplicantsRepository _applicantsRepository;
+        //private readonly ApplicantsRespository2 _applicantsRespository2;
         public ApplicantsController(ApplicantsRepository applicantsRepository)
         {
             _applicantsRepository = applicantsRepository;
@@ -24,7 +25,9 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [HttpGet]
         public IEnumerable<Applicant> Get()
         {
-            IEnumerable<Applicant> applicants =  _applicantsRepository.GetApplicants().ToList();
+            //IEnumerable<Applicant> applicants =  _applicantsRepository.GetApplicants().ToList();
+            //return applicants;
+            IEnumerable<Applicant> applicants = _applicantsRepository.FindAll();
             return applicants;
             //return new string[] { "value1", "value2" };
         }
@@ -42,7 +45,10 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         {
             if(value != null)
             {
-                _applicantsRepository.AddApplicant(value);
+                _applicantsRepository.Create(value);
+                _applicantsRepository.Save();
+
+                //_applicantsRepository.AddApplicant(value);
             }
         }
 

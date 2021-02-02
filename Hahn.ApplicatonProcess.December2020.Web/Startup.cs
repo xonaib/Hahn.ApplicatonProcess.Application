@@ -32,6 +32,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web
 
             services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase("Test"));
             //services.AddScoped()
+            //services.AddScoped<ApplicantsRepository, ApplicantsRepository>();
             services.AddScoped<ApplicantsRepository, ApplicantsRepository>();
         }
 
