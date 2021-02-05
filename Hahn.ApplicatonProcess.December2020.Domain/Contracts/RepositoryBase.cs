@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq;
 using System.Linq.Expressions;
 using Hahn.ApplicatonProcess.December2020.Domain.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hahn.ApplicatonProcess.December2020.Domain.Repository
 {
@@ -34,6 +35,11 @@ namespace Hahn.ApplicatonProcess.December2020.Domain.Repository
         public void Update(T entity)
         {
             RepositoryContext.Set<T>().Update(entity);
+        }
+        public void Update(T newEntity, T oldEntity) //T entity
+        {
+            RepositoryContext.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+            RepositoryContext.Entry(oldEntity).State = EntityState.Modified;            
         }
 
         public void Delete(T entity)

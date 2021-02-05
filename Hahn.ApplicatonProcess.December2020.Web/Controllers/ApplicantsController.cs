@@ -19,6 +19,8 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Produces(MediaTypeNames.Application.Json)]
     public class ApplicantsController : ControllerBase
     {
         private readonly ApplicantsRepository _applicantsRepository;
@@ -67,9 +69,16 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
         // GET api/<ApplicantsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Get(int id)
         {
-            return "value";
+            Applicant applicant = _applicantsRepository.Get(id);
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+            return Ok(applicant);
         }
 
         // POST api/<ApplicantsController>
@@ -77,11 +86,10 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [SwaggerRequestExample(typeof(Applicant), typeof(ApplicantPostExample))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
+
         public IActionResult Post([FromBody] Applicant value)
         {
-            if(value != null && ModelState.IsValid)
+            if (value != null && ModelState.IsValid)
             {
                 int id = _applicantsRepository.Create(value);
 
@@ -95,14 +103,35 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
         // PUT api/<ApplicantsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Put(int id, [FromBody] Applicant value)
         {
+            if (value != null && ModelState.IsValid)
+            {
+                bool result = _applicantsRepository.Update(id, value);
+                if (result)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
 
         // DELETE api/<ApplicantsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
         {
+            bool result = _applicantsRepository.Delete(id);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

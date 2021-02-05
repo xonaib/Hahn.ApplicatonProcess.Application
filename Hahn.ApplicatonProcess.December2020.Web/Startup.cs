@@ -127,6 +127,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web
             //    //    });
             //});
 
+            services.AddSwaggerExamples();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -148,6 +149,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web
                     }
                 });
 
+                c.ExampleFilters();
                 // Set the comments path for the Swagger JSON and UI.
                 //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
