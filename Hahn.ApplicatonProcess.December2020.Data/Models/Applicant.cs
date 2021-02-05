@@ -48,8 +48,10 @@ namespace Hahn.ApplicatonProcess.December2020.Data.Models
         private const string TableName = "Applicant";
         public void Configure(EntityTypeBuilder<Applicant> builder)
         {
-            //builder.ToTable(TableName);
-            //builder.HasKey(x => x.Identifier);
+
+            builder.Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
             builder.Property(x => x.ID)
                 .IsRequired();
 

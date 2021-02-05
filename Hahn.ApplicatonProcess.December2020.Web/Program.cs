@@ -18,9 +18,14 @@ namespace Hahn.ApplicatonProcess.December2020.Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                //.UseKestrel()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    //webBuilder.UseKestrel(options =>
+                    //{
+
+                    //}).UseStartup<Startup>();
                 });
     }
 }

@@ -36,5 +36,12 @@ namespace Hahn.ApplicatonProcess.December2020.Domain.Repository
         : base(repositoryContext)
         {
         }
+
+        public new int Create(Applicant applicant)
+        {
+            base.Create(applicant);
+            Save();
+            return applicant.ID;
+        }
     }
 }
