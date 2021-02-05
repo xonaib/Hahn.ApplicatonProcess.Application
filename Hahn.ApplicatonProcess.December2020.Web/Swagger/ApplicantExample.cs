@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace Hahn.ApplicatonProcess.December2020.Web.Swagger
 {
     public class ApplicantPostExample: IExamplesProvider<Applicant>
-    {       
-        Applicant IExamplesProvider<Applicant>.GetExamples()
+    {
+        // IExamplesProvider<Applicant>.GetExamples
+        public Applicant GetExamples()
         {
             return new Applicant
             {                

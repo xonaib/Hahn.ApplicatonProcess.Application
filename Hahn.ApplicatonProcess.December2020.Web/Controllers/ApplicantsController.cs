@@ -31,7 +31,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all applicants
         /// </summary>
         /// <remarks>
         /// Sample Request
@@ -51,8 +51,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         /// <response code="400">If there was an error processing the request</response>
         // GET: api/<ApplicantsController>
         [HttpGet]
-        [Produces("application/json")]
-        //[SwaggerRequestExample(typeof(Applicant), typeof(ApplicantExample))]
+        //[Produces("application/json")]
         //[SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Applicant), Description = "Delivery options for the country found and returned successfully")]
         //[SwaggerResponseExample((int)HttpStatusCode.OK, typeof(ApplicantExample))]
         //[SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "An invalid or missing input parameter will result in a bad request")]
@@ -67,7 +66,11 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
             return applicants;
         }
 
-        // GET api/<ApplicantsController>/5
+        /// <summary>
+        /// Get by id
+        /// </summary>
+        /// <param name="id">Numeric id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -81,7 +84,26 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
             return Ok(applicant);
         }
 
-        // POST api/<ApplicantsController>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Sample Request
+        /// </remarks>
+        /// <param name="value">
+        /// 
+        ///     {
+        ///        "name": "fffff",
+        ///         "familyName": "xxxxx",
+        ///         "address": "adlkal kdlkaldk",
+        ///         "countryOfOrigin": "pakistan",
+        ///         "emailAdress": "zz@jj",
+        ///         "age": 33,
+        ///         "hired": true
+        ///     }
+        /// </param>
+        /// <returns></returns>
+        // POST <ApplicantsController>
         [HttpPost]
         [SwaggerRequestExample(typeof(Applicant), typeof(ApplicantPostExample))]
         [ProducesResponseType(StatusCodes.Status201Created)]
