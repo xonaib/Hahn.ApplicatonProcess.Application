@@ -46,12 +46,19 @@ namespace Hahn.ApplicatonProcess.December2020.Web
 
             services.AddMvc()
                 .AddFluentValidation()
-                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null); 
-                //.AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
-                //.AddNewtonsoftJson(options =>
-                //{
-                //    jsonSettings.ContractResolver = new JsonContractResolver();
-                //});
+                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                                  builder => builder.AllowAnyOrigin()
+                                                    .AllowAnyMethod()
+                                                    .AllowAnyHeader());
+                // .AllowCredentials()
+            });
+
+            //services.AddFilter
 
             services.AddTransient<IValidator<Applicant>, ApplicantValidator>();
 
@@ -172,7 +179,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("CorsPolicy");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(c =>

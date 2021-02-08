@@ -12,7 +12,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Threading.Tasks;
-
+using Serilog;
+using Microsoft.Extensions.Logging;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
@@ -24,10 +25,13 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
     public class ApplicantsController : ControllerBase
     {
         private readonly ApplicantsRepository _applicantsRepository;
+        private readonly ILogger<ApplicantsController> _logger;
+
         //private readonly ApplicantsRespository2 _applicantsRespository2;
-        public ApplicantsController(ApplicantsRepository applicantsRepository)
+        public ApplicantsController(ApplicantsRepository applicantsRepository, ILogger<ApplicantsController> logger)
         {
             _applicantsRepository = applicantsRepository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -60,8 +64,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)] //(int)HttpStatusCode.BadRequest)
         public IEnumerable<Applicant> Get()
         {
-            //IEnumerable<Applicant> applicants =  _applicantsRepository.GetApplicants().ToList();
-            //return applicants;
+                    
             IEnumerable<Applicant> applicants = _applicantsRepository.FindAll();
             return applicants;
         }
@@ -76,6 +79,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
         {
+            Log.Information($"Get Applicant, id={id}");
             Applicant applicant = _applicantsRepository.Get(id);
             if (applicant == null)
             {
@@ -83,6 +87,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
             }
             return Ok(applicant);
         }
+
 
         /// <summary>
         /// 
@@ -111,16 +116,20 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
         public IActionResult Post([FromBody] Applicant value)
         {
+            string guid = Guid.NewGuid().ToString();
+            Log.Information($"Post Applicant, guid {guid}, with value {value}");
+
             if (value != null && ModelState.IsValid)
             {
                 int id = _applicantsRepository.Create(value);
 
-                return Created("abc", id);
-                //_applicantsRepository.AddApplicant(value);
+                Log.Information($"Post Applicant, guid {guid}, status=201");
+                string fetchUrl = $"/{id}";
+                return Created(fetchUrl, fetchUrl);
             }
 
+            Log.Information($"Post Applicant, guid {guid}, status=400");
             return BadRequest();
-            //return StatusCode(StatusCodes.Status400BadRequest);
         }
 
         // PUT api/<ApplicantsController>/5
@@ -130,14 +139,20 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Put(int id, [FromBody] Applicant value)
         {
+            string guid = Guid.NewGuid().ToString();
+            Log.Information($"Put Applicant, guid {guid}, with value {value}");
+
             if (value != null && ModelState.IsValid)
             {
                 bool result = _applicantsRepository.Update(id, value);
                 if (result)
                 {
+                    Log.Information($"Put Applicant, guid={guid}, status=200");
                     return Ok();
                 }
             }
+
+            Log.Information($"Post Applicant, guid={guid}, status=400");
             return BadRequest();
         }
 
