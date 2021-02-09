@@ -125,7 +125,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
 
                 Log.Information($"Post Applicant, guid {guid}, status=201");
                 string fetchUrl = $"/{id}";
-                return Created(fetchUrl, fetchUrl);
+                return Created("", fetchUrl);
             }
 
             Log.Information($"Post Applicant, guid {guid}, status=400");

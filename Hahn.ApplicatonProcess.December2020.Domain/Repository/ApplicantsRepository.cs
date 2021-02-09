@@ -99,7 +99,7 @@ namespace Hahn.ApplicatonProcess.December2020.Domain.Repository
         {
             using(HttpClient client = new HttpClient())
             {
-                string apiUrl = string.Format("https://restcountries.eu/rest/v2/name/${0}?fullText=true", country);
+                string apiUrl = string.Format("https://restcountries.eu/rest/v2/name/{0}?fullText=true", country);
                 //Post http callas.
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
                 if(response.StatusCode == HttpStatusCode.NotFound)

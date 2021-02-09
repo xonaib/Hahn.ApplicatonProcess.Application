@@ -7,6 +7,10 @@ namespace Hahn.ApplicatonProcess.December2020.Model
 {
     public class Applicant
     {
+        public Applicant()
+        {
+           
+        }
         /// <summary>
         /// Unique Id
         /// </summary>
