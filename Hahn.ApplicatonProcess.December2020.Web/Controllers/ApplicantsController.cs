@@ -139,7 +139,7 @@ namespace Hahn.ApplicatonProcess.December2020.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Put(int id, [FromBody] Applicant value)
         {
-            string guid = Guid.NewGuid().ToString();
+            string guid = Guid.NewGuid().ToString();    
             Log.Information($"Put Applicant, guid {guid}, with value {value}");
 
             if (value != null && ModelState.IsValid)
